@@ -1,0 +1,131 @@
+﻿<UserControl x:Class="PZ3_NetworkService.Views.NetworkDataView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PZ3_NetworkService.Views"
+        xmlns:viewModel="clr-namespace:PZ3_NetworkService.ViewModel"
+        xmlns:data="clr-namespace:PZ3_NetworkService.Model"
+        mc:Ignorable="d"
+        Height="600" Width="800" Background="Aquamarine">
+
+    <UserControl.Resources>
+        <DataTemplate DataType="{x:Type data:WaterMachine}">
+            <StackPanel Orientation="Horizontal">
+                <TextBox Text="{Binding Path=Id, Mode=TwoWay}" Width="200"/>
+                <TextBox Text="{Binding Path=Name, Mode=TwoWay}" Width="200"/>
+                <ComboBox Text="{Binding Path=Tip_name, Mode=TwoWay}" Width="200"/>
+            </StackPanel>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type viewModel:NetworkDataViewModel}" x:Key="viewmodel">
+            <StackPanel Orientation="Horizontal">
+                <TextBox Text="{Binding Path=Procenti1, Mode=TwoWay}"/>
+                <TextBox Text="{Binding Path=Procenti2, Mode=TwoWay}"/>
+                <TextBox Text="{Binding Path=Procenti3, Mode=TwoWay}"/>
+                <TextBox Text="{Binding Path=Procenti4, Mode=TwoWay}"/>
+                <TextBox Text="{Binding Path=Procenti5, Mode=TwoWay}"/>
+            </StackPanel>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type data:SearchClass}">
+            <StackPanel Orientation="Horizontal">
+                <TextBox Text="{Binding Path=Search_string, Mode=TwoWay}" Width="200"/>
+                <RadioButton IsChecked="{Binding IsCheckedName}"/>
+                <RadioButton IsChecked="{Binding IsCheckedType}"/>
+            </StackPanel>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type data:FilterClass}">
+            <StackPanel Orientation="Horizontal">
+                <RadioButton IsChecked="{Binding IsCheckedOkValue}"/>
+                <RadioButton IsChecked="{Binding IsCheckedNoValue}"/>
+            </StackPanel>
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <Grid >
+        <DataGrid AutoGenerateColumns="False" HorizontalAlignment="Left" Height="284" Margin="10,85,0,0" VerticalAlignment="Top" Width="432" Background="LightSeaGreen" ItemsSource="{Binding Lista_elektarana}" IsReadOnly="True" SelectedItem="{Binding SelectedElektrana}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Width="105" Binding="{Binding Id}">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                            <Setter Property="FontSize" Value="10"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="NAME" Width="105" Binding="{Binding Name}">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                            <Setter Property="FontSize" Value="10"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="TYPE" Width="105" Binding="{Binding Tip_name}">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                            <Setter Property="FontSize" Value="10"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="VALUE" Width="109" Binding="{Binding Vrednost}">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                            <Setter Property="FontSize" Value="10"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="432" Margin="460,0,0,0" Stroke="Black" VerticalAlignment="Top" Width="5"/>
+        <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="5" Margin="464,289,0,0" Stroke="Black" VerticalAlignment="Top" Width="300" RenderTransformOrigin="0.5,0.5"/>
+
+        <!--Search operacija-->
+        <RadioButton Content="Name" HorizontalAlignment="Left" Margin="26,10,0,0" VerticalAlignment="Top" Height="22" Width="91" Background="LightSeaGreen" IsChecked="{Binding Path=VariableRADIONAME, Mode=TwoWay}"/>
+        <RadioButton Content="Type" HorizontalAlignment="Left" Margin="26,37,0,0" VerticalAlignment="Top" Height="25" Width="91" Background="LightSeaGreen" IsChecked="{Binding Path=VariableRADIOTYPE, Mode=TwoWay}"/>
+        <TextBox HorizontalAlignment="Left" Height="26" Margin="140,18,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="196" Background="LightSeaGreen" Text="{Binding VariableSEARCH}"/>
+        <Button Content="Search" HorizontalAlignment="Left" Margin="341,18,0,0" VerticalAlignment="Top" Width="85" Height="26" Command="{Binding SearchCommand}"/>
+        <Button Content="Stop Search" HorizontalAlignment="Left" Margin="341,49,0,0" VerticalAlignment="Top" Width="85" Height="26" Command="{Binding EndSearchCommand}"/>
+
+        <!--Operacija dodavanja-->
+        <Label Content="ADDING A NUCLEAR POWER STATION" HorizontalAlignment="Left" Margin="482,23,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.242,-0.723" Width="299" Height="39" FontSize="15" FontWeight="Bold"/>
+        <Label Content="Id:" HorizontalAlignment="Left" Margin="470,85,0,0" VerticalAlignment="Top" Height="31" Width="50" FontSize="15"/>
+        <Label Content="Name:" HorizontalAlignment="Left" Margin="470,147,0,0" VerticalAlignment="Top" Height="31" Width="55" FontSize="15" RenderTransformOrigin="0.59,-0.629"/>
+        <TextBox HorizontalAlignment="Left" Height="31" Margin="525,85,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="205" Background="LightSeaGreen" Text="{Binding VariableID}"/>
+        <TextBox HorizontalAlignment="Left" Height="31" Margin="525,147,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="205" Background="LightSeaGreen" Text="{Binding VariableNAME}"/>
+        <Label Content="Type:" HorizontalAlignment="Left" Margin="470,208,0,0" VerticalAlignment="Top" Height="31" Width="55" FontSize="15" RenderTransformOrigin="0.59,-0.629"/>
+        <ComboBox x:Name="comboBoxTipPotrVoda" HorizontalAlignment="Left" Margin="530,208,0,0" VerticalAlignment="Top" Width="200" Height="31" Text="{Binding VariableTIP}" ItemsSource="{Binding Waters}"/>
+        <Button Content="Add" HorizontalAlignment="Left" Margin="581,257,0,0" VerticalAlignment="Top" Width="85" Height="26"  Command="{Binding AddCommand}"/>
+
+        <!--Operacija brisanja-->
+        <Button Content="Delete" HorizontalAlignment="Left" Margin="26,382,0,0" VerticalAlignment="Top" Width="85" Height="26" Background="LightGray" Command="{Binding DeleteCommand}"/>
+
+        <!--Prikaz statistike-->
+        <Label Content="Statisitic: Percetange of types [%]" HorizontalAlignment="Left" Margin="465,288,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.242,-0.723" Width="246" Height="30" FontSize="15" FontWeight="Bold"/>
+        <Label Content="Turbo795:" HorizontalAlignment="Left" Margin="465,318,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.242,-0.723" Width="93" Height="30" FontSize="12"/>
+        <Label Content="HidroMer71:" HorizontalAlignment="Left" Margin="465,348,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.242,-0.723" Width="93" Height="30" FontSize="12"/>
+        <Label Content="SuperAqua10:" HorizontalAlignment="Left" Margin="465,378,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.242,-0.723" Width="93" Height="30" FontSize="12"/>
+        <Label Content="Turbo796:" HorizontalAlignment="Left" Margin="623,318,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.242,-0.723" Width="93" Height="30" FontSize="12"/>
+        <Label Content="HidroMer81:" HorizontalAlignment="Left" Margin="623,348,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.242,-0.723" Width="93" Height="30" FontSize="12"/>
+        <TextBox HorizontalAlignment="Left" Margin="558,318,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" Width="41" Text="{Binding Path=Procenti1,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"/>
+        <TextBox HorizontalAlignment="Left" Margin="716,318,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" Width="41" Text="{Binding Path=Procenti2,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"/>
+        <TextBox HorizontalAlignment="Left" Margin="558,348,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" Width="41" Text="{Binding Path=Procenti3,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"/>
+        <TextBox HorizontalAlignment="Left" Margin="716,348,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" Width="41" Text="{Binding Path=Procenti4,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"/>
+        <TextBox HorizontalAlignment="Left" Margin="558,378,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" Width="41" Text="{Binding Path=Procenti5,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"/>
+
+        <!--Operacija filtriranja-->
+        <RadioButton Content="Out of range values" HorizontalAlignment="Left" Margin="196,378,0,0" VerticalAlignment="Top" Height="22" Width="140" Background="LightSeaGreen" IsChecked="{Binding Path=VariableRADIONO, Mode=TwoWay}"/>
+        <RadioButton Content="Expected values" HorizontalAlignment="Left" Margin="196,400,0,0" VerticalAlignment="Top" Height="22" Width="140" Background="LightSeaGreen" IsChecked="{Binding Path=VariableRADIOOK, Mode=TwoWay}"/>
+        <Button Content="Filter" HorizontalAlignment="Left" Margin="341,372,0,0" VerticalAlignment="Top" Width="85" Height="26" Background="LightGray" Command="{Binding FilterCommand}"/>
+        <Button Content="Stop Filter" HorizontalAlignment="Left" Margin="341,403,0,0" VerticalAlignment="Top" Width="85" Height="26" Background="LightGray" Command="{Binding EndFilterCommand}"/>
+    </Grid>
+</UserControl>

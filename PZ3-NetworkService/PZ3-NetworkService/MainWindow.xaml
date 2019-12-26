@@ -1,0 +1,55 @@
+﻿<Window x:Class="PZ3_NetworkService.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PZ3_NetworkService"
+        xmlns:view="clr-namespace:PZ3_NetworkService.Views"
+        xmlns:viewModel="clr-namespace:PZ3_NetworkService.ViewModel"
+        mc:Ignorable="d"
+        Icon="Google-Noto-Emoji-Symbols-73040-radioactive.ico"
+        xmlns:gif="http://wpfanimatedgif.codeplex.com"
+        Title="Program for monitoring water consumption" Height="600" Width="800">
+    <!--dodati onaj kod za klasu-->
+    <Window.DataContext>
+        <local:MainWindowViewModel/>
+    </Window.DataContext>
+
+
+    <!--kod koji sluzi za povezivanje MainWindow-a,Views-a i govori koji pogled ce koristit koji ViewModel-->
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type viewModel:NetworkViewModel}">
+            <view:NetworkView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:NetworkDataViewModel}">
+            <view:NetworkDataView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:DataChartViewModel}">
+            <view:DataChartView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:ReportViewModel}">
+            <view:ReportView/>
+        </DataTemplate>
+    </Window.Resources>
+
+    <Grid>
+        <DockPanel Grid.Row="0" Margin="10,10,9.6,452.4" Background="Gray">
+            <Button Content="Network View" Height="97" VerticalAlignment="Top" Width="125" Command="{Binding NavCommand}" CommandParameter="network">
+                <Button.InputBindings>
+                    <KeyBinding Command="{Binding Command1}" Key="F1"/>
+                </Button.InputBindings>
+            </Button>
+
+            <Button Content="Network Data" Height="97" VerticalAlignment="Top" Width="125" Command="{Binding NavCommand}" CommandParameter="data"/>
+            <Button Content="Data Chart" Height="97" VerticalAlignment="Top" Width="125" Command="{Binding NavCommand}" CommandParameter="chart"/>
+            <Button Content="Report" Height="97" VerticalAlignment="Top" Width="125" Command="{Binding NavCommand}" CommandParameter="report"/>
+            <Image Source="300px-PressurizedWaterReactor.gif" Width="215" gif:ImageBehavior.RepeatBehavior="Forever" gif:ImageBehavior.AnimatedSource="C:\Users\Mile\Desktop\MVVM (Mile)\PZ3-NetworkService\PZ3-NetworkService\nuclear.gif"/>
+
+        </DockPanel>
+
+        <Grid Margin="10,118,9.6,10.4">
+            <!--dodati onu jednu liniju...DODAO-->
+            <ContentControl Content="{Binding CurrentViewModel}"/>
+        </Grid>
+    </Grid>
+</Window>
